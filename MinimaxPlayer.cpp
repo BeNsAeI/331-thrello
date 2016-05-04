@@ -55,24 +55,24 @@ void MinimaxPlayer::logic(OthelloBoard* b, struct Tree* current, int depth,int s
 		current->leaf = false;
 		current->branch = new struct Tree[counter];
 		current->count = counter;
-		current->depth = 0;
 		for (int i = 0; i < counter; i++)
 		{
 			current->branch[i].move = validMoves[i];
-			current->branch[i].depth = depth;
+			current->branch[i].depth = depth + 1;
 			current->branch[i].leaf = true;
 			current->branch[i].parent = current;
 			current->branch[i].branch = NULL;
-			current->branch[i].value = myTree->moves[current->branch[i].move].value;
+			current->branch[i].value = myTree->moves[current->branch[i].move].value - myTree->moves[current->branch[i].move].risk;
 			current->branch[i].board = new OthelloBoard(*b);
 			current->branch[i].board->play_move(myTree->moves[current->branch[i].move].pos[x], myTree->moves[current->branch[i].move].pos[y], sym);
+			current->branch[i].board->display();
 			int outsym;
 			if (sym == 'X')
 				outsym = 'O';
 			else
 				outsym = 'X';
 			std::cout << "Passing i: " << i << std::endl;
-			logic(b, &current->branch[i], depth + 1, outsym);
+			logic(current->branch[i].board, &current->branch[i], depth + 1, outsym);
 		}
 		
 	}
