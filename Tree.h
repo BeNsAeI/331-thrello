@@ -1,20 +1,25 @@
 #ifndef TREE_H
 #define TREE_H
+#define x 0
+#define y 1
 
-struct Tree{
+class Tree{
+public:
+	int pos[2];
 	int value;
 	int risk;
 	bool valid;
-	struct Tree * b;
 };
+
 class BuildTree{
 public:
 	BuildTree();
 	BuildTree(int row, int col);
 	~BuildTree();
+	void moveGen(int row, int col);
 	bool isValid();
-	struct Tree * head;
-	struct Tree * index;
+private:
+	Tree * moves;
 };
 
 #endif
