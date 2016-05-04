@@ -38,7 +38,7 @@ public:
     void get_move(OthelloBoard* b, int& col, int& row);
 	int Utilityfunction(OthelloBoard* b, struct Tree* current, int depth, int sym, int outsym, int i); //Utility Function to find goodness
 	void _minimax(struct Tree * current, int i);							//MINIMAX Helper FUNCTION it helps calculating utility
-	void logic(OthelloBoard* b, struct Tree* current, int depth, int sym); //Successor function
+	void SuccessorFunction(OthelloBoard* b, struct Tree* current, int depth, int sym); //Successor function
 	void MiniMax(OthelloBoard* b);											//MiniMax: Supplies the next move from Logic tree and supplies the best out come based on the highest possible value from branches
     /**
      * @return A copy of the MinimaxPlayer object

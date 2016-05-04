@@ -75,8 +75,8 @@ void MinimaxPlayer::_minimax(struct Tree * current,int i)
 	}
 }
 
-//Successor function
-void MinimaxPlayer::logic(OthelloBoard* b, struct Tree* current, int depth,int sym)
+//SuccessorFunction
+void MinimaxPlayer::SuccessorFunction(OthelloBoard* b, struct Tree* current, int depth, int sym)
 {
 	int pause;
 	rootIsSet = true;
@@ -121,7 +121,7 @@ void MinimaxPlayer::logic(OthelloBoard* b, struct Tree* current, int depth,int s
 
 
 			current->branch[i].board->play_move(myTree->moves[current->branch[i].move].pos[x], myTree->moves[current->branch[i].move].pos[y], sym);
-			logic(current->branch[i].board, &current->branch[i], depth + 1, outsym);
+			SuccessorFunction(current->branch[i].board, &current->branch[i], depth + 1, outsym);
 		}
 		
 	}
@@ -213,7 +213,7 @@ void MinimaxPlayer::get_move(OthelloBoard* b, int& col, int& row) {
 		if (!rootIsSet)
 		{
 			OthelloBoard * myboard = new OthelloBoard(*b);
-			logic(myboard, &root, 0,symbol);
+			SuccessorFunction(myboard, &root, 0, symbol);
 			if (DEBUG)
 				std::cout << "Tree calculated." <<std::endl;
 			nm = &root;
