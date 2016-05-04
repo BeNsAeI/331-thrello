@@ -62,6 +62,9 @@
     <ClInclude Include="Tree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Const.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile">

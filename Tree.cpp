@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Const.h"
 #include "Tree.h"
 
 BuildTree::BuildTree()
@@ -116,9 +117,15 @@ void BuildTree::moveGen(int row, int col)
 			yv++;
 			moves[i].pos[x] = xv;
 			moves[i].pos[y] = yv;
+			xv++;
 		}
 		moves[i].valid = false;
 		moves[i].value = value(moves[i].pos[y], moves[i].pos[x]);
 		moves[i].risk = risk(moves[i].pos[y], moves[i].pos[x]);
+		if (DEBUG)
+		{
+			std::cout << "Moves[" << i << "].pos[x] = " << moves[i].pos[x] << std::endl;
+			std::cout << "Moves[" << i << "].pos[y] = " << moves[i].pos[y] << std::endl;
+		}
 	}
 }

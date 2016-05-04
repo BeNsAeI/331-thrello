@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
+    <ClInclude Include="Const.h" />
     <ClInclude Include="GameDriver.h" />
     <ClInclude Include="HumanPlayer.h" />
     <ClInclude Include="MinimaxPlayer.h" />
