@@ -7,6 +7,7 @@
 #include <iostream>
 #include <assert.h>
 #include "MinimaxPlayer.h"
+#include "Tree.h"
 
 using std::vector;
 
