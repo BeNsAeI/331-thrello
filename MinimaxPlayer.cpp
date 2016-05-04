@@ -35,24 +35,8 @@ MinimaxPlayer::MinimaxPlayer(char symb) :
 MinimaxPlayer::~MinimaxPlayer() {
 	delete myTree;
 }
-/*
-fun minimax(n: node): int =
-	if leaf(n) then return evaluate(n)
-	if n is a max node
-	v := L
-	for each child of n
-		v' := minimax (child)
-		if v' > v, v:= v'
-			return v
-		if n is a min node
-	v := W
-	for each child of n
-		v' := minimax (child)
-		if v' < v, v:= v'
-			return v
 
-*/
-//MINIMAX Function
+//Utility Function
 int MinimaxPlayer::Utilityfunction(OthelloBoard* b, struct Tree* current, int depth, int sym, int outsym,int i)
 {
 	int out = 1;
@@ -64,7 +48,8 @@ int MinimaxPlayer::Utilityfunction(OthelloBoard* b, struct Tree* current, int de
 	return out;
 }
 
-//MINIMAX Helper FUNCTION
+//MINIMAX Helper FUNCTION: Minimax minimizer: it subtracts the minimizing agent's score from the bottom of the tree (leaf) and pass them up
+//It uses an iterator and makes sure that the values are cumulative
 void MinimaxPlayer::_minimax(struct Tree * current,int i)
 {
 	struct Tree * it = current;
@@ -160,7 +145,24 @@ bool match(OthelloBoard * a, OthelloBoard * b)
 	}
 	return false;
 }
-//UtilityFunction
+/*
+fun minimax(n: node): int =
+if leaf(n) then return evaluate(n)
+if n is a max node
+v := L
+for each child of n
+v' := minimax (child)
+if v' > v, v:= v'
+return v
+if n is a min node
+v := W
+for each child of n
+v' := minimax (child)
+if v' < v, v:= v'
+return v
+
+*/
+//minimax : Max value and Minimax Decision
 void MinimaxPlayer::MiniMax(OthelloBoard* b)
 {
 	int tmpVal = 0;
@@ -193,10 +195,12 @@ void MinimaxPlayer::MiniMax(OthelloBoard* b)
 		std::cout << "** Value: " << tmpVal << std::endl;
 	nm = &nm->branch[tmpIndex];
 }
+
 void MinimaxPlayer::get_move(OthelloBoard* b, int& col, int& row) {
 	int index;
+	//------------------------------------------------
 	//NOAI is a random player for test
-	if (NOAI)
+	/*if (NOAI)
 	{
 		index = 0;
 		myTree->moves[index].valid = myTree->isValid(index, b, symbol);
@@ -207,7 +211,8 @@ void MinimaxPlayer::get_move(OthelloBoard* b, int& col, int& row) {
 		}
 		col = myTree->moves[index].pos[x];
 		row = myTree->moves[index].pos[y];
-	}
+	}*/
+	//------------------------------------------------
 	if (AI)
 	{
 		if (!rootIsSet)
