@@ -49,7 +49,7 @@ void MinimaxPlayer::logic(OthelloBoard* b, struct Tree* current, int depth,int s
 			counter++;
 		}
 	}
-	std::cout << "** " << counter << " Valid moves found at depth " << depth << " with symbol: " << (char)sym << std::endl;
+//	std::cout << "** " << counter << " Valid moves found at depth " << depth << " with symbol: " << (char)sym << std::endl;
 	if (counter != 0)
 	{
 		current->leaf = false;
@@ -65,13 +65,13 @@ void MinimaxPlayer::logic(OthelloBoard* b, struct Tree* current, int depth,int s
 			current->branch[i].value = myTree->moves[current->branch[i].move].value - myTree->moves[current->branch[i].move].risk;
 			current->branch[i].board = new OthelloBoard(*b);
 			current->branch[i].board->play_move(myTree->moves[current->branch[i].move].pos[x], myTree->moves[current->branch[i].move].pos[y], sym);
-			current->branch[i].board->display();
+//			current->branch[i].board->display();
 			int outsym;
 			if (sym == 'X')
 				outsym = 'O';
 			else
 				outsym = 'X';
-			std::cout << "Passing i: " << i << std::endl;
+//			std::cout << "Passing i: " << i << std::endl;
 			logic(current->branch[i].board, &current->branch[i], depth + 1, outsym);
 		}
 		
@@ -104,6 +104,7 @@ void MinimaxPlayer::get_move(OthelloBoard* b, int& col, int& row) {
 			OthelloBoard * myboard = new OthelloBoard(*b);
 			logic(myboard, &root, 0,symbol);
 		}
+		std::cout << "Tree calculated." <<std::endl;
 	}
 	col = myTree->moves[index].pos[x];
 	row = myTree->moves[index].pos[y];
