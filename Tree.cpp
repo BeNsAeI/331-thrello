@@ -63,18 +63,19 @@ BuildTree::BuildTree(int row, int col)
 	valueMap[3][0] = 5;
 	valueMap[0][3] = 5;
 	valueMap[3][3] = 5;
-	valueMap[0][1] = 3;
-	valueMap[0][2] = 3;
-	valueMap[1][0] = 3;
-	valueMap[2][0] = 3;
-	valueMap[3][1] = 3;
-	valueMap[3][2] = 3;
-	valueMap[1][3] = 3;
-	valueMap[2][3] = 3;
+	valueMap[0][1] = 2;
+	valueMap[0][2] = 2;
+	valueMap[1][0] = 2;
+	valueMap[2][0] = 2;
+	valueMap[3][1] = 2;
+	valueMap[3][2] = 2;
+	valueMap[1][3] = 2;
+	valueMap[2][3] = 2;
 	valueMap[1][1] = 5;
 	valueMap[2][2] = 5;
 	valueMap[1][2] = 5;
 	valueMap[2][1] = 5;
+
 	int p = row * col;
 	moves = new Tree[p];
 	moveGen(row,col);
@@ -92,11 +93,9 @@ int  BuildTree::risk(int row, int col)
 {
 	return riskMap[row][col];
 }
-bool BuildTree::isValid()
+bool BuildTree::isValid(int index, OthelloBoard* board, char symbol)
 {
-	if (0)
-		return false;
-	return true;
+	return board->is_legal_move(moves[index].pos[x], moves[index].pos[y], symbol);
 }
 
 void BuildTree::moveGen(int row, int col)
@@ -118,7 +117,7 @@ void BuildTree::moveGen(int row, int col)
 			moves[i].pos[x] = xv;
 			moves[i].pos[y] = yv;
 		}
-		moves[i].valid = isValid();
+		moves[i].valid = false;
 		moves[i].value = value(moves[i].pos[y], moves[i].pos[x]);
 		moves[i].risk = risk(moves[i].pos[y], moves[i].pos[x]);
 	}

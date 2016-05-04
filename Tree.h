@@ -3,6 +3,8 @@
 #define x 0
 #define y 1
 
+#include "OthelloBoard.h"
+
 class Tree{
 public:
 	int pos[2];
@@ -19,9 +21,9 @@ public:
 	void moveGen(int row, int col);
 	int value(int row, int col);
 	int risk(int row, int col);
-	bool isValid();
-private:
+	bool isValid(int index, OthelloBoard* board,char symbol);
 	Tree * moves;
+private:
 	int riskMap[4][4];
 	int valueMap[4][4];
 };

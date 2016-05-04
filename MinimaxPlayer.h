@@ -44,6 +44,7 @@ public:
     MinimaxPlayer* clone();
 
 private:
+	char symbol;
 	BuildTree * myTree;
 };
 
