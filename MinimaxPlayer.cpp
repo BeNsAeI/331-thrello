@@ -29,22 +29,22 @@ MinimaxPlayer::MinimaxPlayer(char symb) :
 	riskMap[1][2] = 3;
 	riskMap[2][1] = 3;
 
-	valueMap[0][0] = 0;
-	valueMap[3][0] = 0;
-	valueMap[0][3] = 0;
-	valueMap[3][3] = 0;
-	valueMap[0][1] = 1;
-	valueMap[0][2] = 1;
-	valueMap[1][0] = 1;
-	valueMap[2][0] = 1;
-	valueMap[3][1] = 1;
-	valueMap[3][2] = 1;
-	valueMap[1][3] = 1;
-	valueMap[2][3] = 1;
-	valueMap[1][1] = 3;
-	valueMap[2][2] = 3;
-	valueMap[1][2] = 3;
-	valueMap[2][1] = 3;
+	valueMap[0][0] = 5;
+	valueMap[3][0] = 5;
+	valueMap[0][3] = 5;
+	valueMap[3][3] = 5;
+	valueMap[0][1] = 3;
+	valueMap[0][2] = 3;
+	valueMap[1][0] = 3;
+	valueMap[2][0] = 3;
+	valueMap[3][1] = 3;
+	valueMap[3][2] = 3;
+	valueMap[1][3] = 3;
+	valueMap[2][3] = 3;
+	valueMap[1][1] = 5;
+	valueMap[2][2] = 5;
+	valueMap[1][2] = 5;
+	valueMap[2][1] = 5;
 
 }
 
