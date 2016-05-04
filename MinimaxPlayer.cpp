@@ -6,6 +6,7 @@
  */
 #include <iostream>
 #include <assert.h>
+#include "Const.h"
 #include "MinimaxPlayer.h"
 #include "Tree.h"
 
@@ -22,15 +23,18 @@ MinimaxPlayer::~MinimaxPlayer() {
 }
 
 void MinimaxPlayer::get_move(OthelloBoard* b, int& col, int& row) {
-	int i = 0;
-	myTree->moves[i].valid = myTree->isValid(i, b, symbol);
-	while (!myTree->moves[i].valid )
+	int index = 0;
+	if (NOAI)
 	{
-		i++;
-		myTree->moves[i].valid = myTree->isValid(i,b,symbol);
+		myTree->moves[index].valid = myTree->isValid(index, b, symbol);
+		while (!myTree->moves[index].valid)
+		{
+			index++;
+			myTree->moves[index].valid = myTree->isValid(index, b, symbol);
+		}
 	}
-	col = myTree->moves[i].pos[x];
-	row = myTree->moves[i].pos[y];
+	col = myTree->moves[index].pos[x];
+	row = myTree->moves[index].pos[y];
 	std::cout << "MiniMaxBot selected " << col << " as colomn and " << row << " as row." << std::endl;
 
 }
