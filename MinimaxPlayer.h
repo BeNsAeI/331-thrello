@@ -37,7 +37,7 @@ public:
 	 */
     void get_move(OthelloBoard* b, int& col, int& row);
 	void logic(OthelloBoard* b, struct Tree* current, int depth,int sym);
-	int nextMove(OthelloBoard* b);
+	void nextMove(OthelloBoard* b);
     /**
      * @return A copy of the MinimaxPlayer object
      * This is a virtual copy constructor
@@ -48,8 +48,10 @@ private:
 	int cDepth;
 	char symbol;
 	char Osymbol;
+	bool lastMap[4][4];
 	BuildTree * myTree;
 	struct Tree root;
+	struct Tree * nm;
 	bool rootIsSet;
 };
 

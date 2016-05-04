@@ -38,6 +38,7 @@ MinimaxPlayer::~MinimaxPlayer() {
 
 void MinimaxPlayer::logic(OthelloBoard* b, struct Tree* current, int depth,int sym)
 {
+	int pause;
 	rootIsSet = true;
 	int validMoves[16];
 	int counter = 0;
@@ -64,8 +65,16 @@ void MinimaxPlayer::logic(OthelloBoard* b, struct Tree* current, int depth,int s
 			current->branch[i].branch = NULL;
 			current->branch[i].turn = sym;
 			current->branch[i].value = myTree->moves[current->branch[i].move].value - myTree->moves[current->branch[i].move].risk;
+			struct Tree * it = current;
+			while (it != &root)
+			{
+				it->value = it->value + current->branch[i].value;
+				it = it->parent;
+			}
+
 			current->branch[i].board = new OthelloBoard(*b);
 			current->branch[i].board->play_move(myTree->moves[current->branch[i].move].pos[x], myTree->moves[current->branch[i].move].pos[y], sym);
+//			current->branch[i].board->display();
 			int outsym;
 			if (sym == 'X')
 				outsym = 'O';
@@ -73,6 +82,9 @@ void MinimaxPlayer::logic(OthelloBoard* b, struct Tree* current, int depth,int s
 				outsym = 'X';
 			if (current->branch[i].board->count_score(sym) > current->branch[i].board->count_score(outsym))
 				current->branch[i].value = current->branch[i].value + 2;
+//						std::cout << "Value: " << current->branch[i].value  << std::endl;
+//						std::cin >> pause;
+
 			logic(current->branch[i].board, &current->branch[i], depth + 1, outsym);
 		}
 		
@@ -86,9 +98,59 @@ void MinimaxPlayer::logic(OthelloBoard* b, struct Tree* current, int depth,int s
 		current->value = 0;
 	}
 }
-int MinimaxPlayer::nextMove(OthelloBoard* b)
+bool match(OthelloBoard * a, OthelloBoard * b)
 {
-	return 0;
+	if (a->get_cell(0, 0) == b->get_cell(0, 0) &&
+		a->get_cell(0, 1) == b->get_cell(0, 1) &&
+		a->get_cell(0, 2) == b->get_cell(0, 2) &&
+		a->get_cell(0, 3) == b->get_cell(0, 3) &&
+
+		a->get_cell(1, 0) == b->get_cell(1, 0) &&
+		a->get_cell(1, 1) == b->get_cell(1, 1) &&
+		a->get_cell(1, 2) == b->get_cell(1, 2) &&
+		a->get_cell(1, 3) == b->get_cell(1, 3) &&
+
+		a->get_cell(2, 0) == b->get_cell(2, 0) &&
+		a->get_cell(2, 1) == b->get_cell(2, 1) &&
+		a->get_cell(2, 2) == b->get_cell(2, 2) &&
+		a->get_cell(2, 3) == b->get_cell(2, 3) &&
+
+		a->get_cell(3, 0) == b->get_cell(3, 0) &&
+		a->get_cell(3, 1) == b->get_cell(3, 1) &&
+		a->get_cell(3, 2) == b->get_cell(3, 2) &&
+		a->get_cell(3, 3) == b->get_cell(3, 3))
+	{
+		return true;
+	}
+	return false;
+}
+void MinimaxPlayer::nextMove(OthelloBoard* b)
+{
+	int tmpVal = 0;
+	int tmpIndex = 0;
+	struct Tree * tmp;
+	if (cDepth > 0)
+	{
+		for (int i = 0; i < nm->count; i++)
+		{
+			if (match(b, nm->branch[i].board))
+				nm = &nm->branch[i];
+		}
+	}
+	tmpVal = 0;
+	tmpIndex = 0;
+
+	for (int i = 0; i < nm->count; i++)
+	{
+		tmp = &nm->branch[i];
+		if (b->is_legal_move(myTree->moves[tmp->move].pos[x], myTree->moves[tmp->move].pos[y], symbol))
+		{
+			if (tmp->value > tmpVal)
+				tmpIndex = i;
+		}
+	}
+	std::cout << "** Value: " << tmpVal << std::endl;
+	nm = &nm->branch[tmpIndex];
 }
 void MinimaxPlayer::get_move(OthelloBoard* b, int& col, int& row) {
 	int index;
@@ -101,6 +163,8 @@ void MinimaxPlayer::get_move(OthelloBoard* b, int& col, int& row) {
 			index++;
 			myTree->moves[index].valid = myTree->isValid(index, b, symbol);
 		}
+		col = myTree->moves[index].pos[x];
+		row = myTree->moves[index].pos[y];
 	}
 	if (AI)
 	{
@@ -109,12 +173,13 @@ void MinimaxPlayer::get_move(OthelloBoard* b, int& col, int& row) {
 			OthelloBoard * myboard = new OthelloBoard(*b);
 			logic(myboard, &root, 0,symbol);
 			std::cout << "Tree calculated." <<std::endl;
+			nm = &root;
 		}
+		nextMove(b);
+		col = myTree->moves[nm->move].pos[x];
+		row = myTree->moves[nm->move].pos[y];
 	}
-	col = myTree->moves[index].pos[x];
-	row = myTree->moves[index].pos[y];
-	if(b->is_legal_move(col, row, symbol))
-		cDepth++;
+	cDepth++;
 	std::cout << "MiniMaxBot selected " << col << " as colomn and " << row << " as row." << std::endl;
 
 }
