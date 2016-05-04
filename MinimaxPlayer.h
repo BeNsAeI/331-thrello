@@ -44,8 +44,6 @@ public:
     MinimaxPlayer* clone();
 
 private:
-	int riskMap[4][4];
-	int valueMap[4][4];
 	BuildTree * myTree;
 };
 
