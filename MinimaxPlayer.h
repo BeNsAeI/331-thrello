@@ -10,6 +10,7 @@
 
 #include "OthelloBoard.h"
 #include "Player.h"
+#include "Tree.h"
 #include <vector>
 
 /**
@@ -45,6 +46,7 @@ public:
 private:
 	int riskMap[4][4];
 	int valueMap[4][4];
+	BuildTree * myTree;
 };
 
 

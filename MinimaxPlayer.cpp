@@ -46,11 +46,11 @@ MinimaxPlayer::MinimaxPlayer(char symb) :
 	valueMap[2][2] = 5;
 	valueMap[1][2] = 5;
 	valueMap[2][1] = 5;
+	myTree = new BuildTree(4,4);
 
 }
 
 MinimaxPlayer::~MinimaxPlayer() {
-
 }
 
 void MinimaxPlayer::get_move(OthelloBoard* b, int& col, int& row) {

@@ -83,6 +83,7 @@
     <ClCompile Include="MinimaxPlayer.cpp" />
     <ClCompile Include="OthelloBoard.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Tree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
@@ -91,6 +92,10 @@
     <ClInclude Include="MinimaxPlayer.h" />
     <ClInclude Include="OthelloBoard.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Tree.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
