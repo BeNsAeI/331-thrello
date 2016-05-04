@@ -35,9 +35,25 @@ MinimaxPlayer::MinimaxPlayer(char symb) :
 MinimaxPlayer::~MinimaxPlayer() {
 	delete myTree;
 }
+/*
+fun minimax(n: node): int =
+	if leaf(n) then return evaluate(n)
+	if n is a max node
+	v := L
+	for each child of n
+		v' := minimax (child)
+		if v' > v, v:= v'
+			return v
+		if n is a min node
+	v := W
+	for each child of n
+		v' := minimax (child)
+		if v' < v, v:= v'
+			return v
 
-//Utility Function
-int MinimaxPlayer::UtilityFunction(OthelloBoard* b, struct Tree* current, int depth, int sym, int outsym,int i)
+*/
+//MINIMAX Function
+int MinimaxPlayer::Utilityfunction(OthelloBoard* b, struct Tree* current, int depth, int sym, int outsym,int i)
 {
 	int out = 1;
 	out = out + myTree->moves[current->branch[i].move].value;
@@ -48,7 +64,7 @@ int MinimaxPlayer::UtilityFunction(OthelloBoard* b, struct Tree* current, int de
 	return out;
 }
 
-//MINIMAX FUNCTION
+//MINIMAX Helper FUNCTION
 void MinimaxPlayer::_minimax(struct Tree * current,int i)
 {
 	struct Tree * it = current;
@@ -100,7 +116,7 @@ void MinimaxPlayer::logic(OthelloBoard* b, struct Tree* current, int depth,int s
 				current->branch[i].value = current->branch[i].value - 200;
 			else
 				current->branch[i].value = current->branch[i].value - 20;
-			current->branch[i].value = UtilityFunction(b, current, depth, sym, outsym, i);
+			current->branch[i].value = Utilityfunction(b, current, depth, sym, outsym, i);
 			_minimax(current,i);
 
 
@@ -144,7 +160,8 @@ bool match(OthelloBoard * a, OthelloBoard * b)
 	}
 	return false;
 }
-void MinimaxPlayer::nextMove(OthelloBoard* b)
+//UtilityFunction
+void MinimaxPlayer::MiniMax(OthelloBoard* b)
 {
 	int tmpVal = 0;
 	int tmpIndex = 0;
@@ -178,6 +195,7 @@ void MinimaxPlayer::nextMove(OthelloBoard* b)
 }
 void MinimaxPlayer::get_move(OthelloBoard* b, int& col, int& row) {
 	int index;
+	//NOAI is a random player for test
 	if (NOAI)
 	{
 		index = 0;
@@ -201,7 +219,7 @@ void MinimaxPlayer::get_move(OthelloBoard* b, int& col, int& row) {
 			nm = &root;
 			nm->board = new OthelloBoard(*b);
 		}
-		nextMove(b);
+		MiniMax(b);
 		col = myTree->moves[nm->move].pos[x];
 		row = myTree->moves[nm->move].pos[y];
 	}
