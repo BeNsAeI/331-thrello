@@ -5,12 +5,21 @@
 
 #include "OthelloBoard.h"
 
-class Tree{
+class Node{
 public:
 	int pos[2];
 	int value;
 	int risk;
 	bool valid;
+};
+
+struct Tree{
+	bool leaf;
+	int value;
+	struct Tree * branch;
+	struct Tree * parent;
+	int count;
+	int depth;
 };
 
 class BuildTree{
@@ -22,7 +31,7 @@ public:
 	int value(int row, int col);
 	int risk(int row, int col);
 	bool isValid(int index, OthelloBoard* board,char symbol);
-	Tree * moves;
+	Node * moves;
 private:
 	int riskMap[4][4];
 	int valueMap[4][4];

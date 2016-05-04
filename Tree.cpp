@@ -37,7 +37,7 @@ BuildTree::BuildTree()
 	valueMap[2][2] = 5;
 	valueMap[1][2] = 5;
 	valueMap[2][1] = 5;
-	moves = new Tree[16];
+	moves = new Node[16];
 	moveGen(4, 4);
 }
 
@@ -78,7 +78,7 @@ BuildTree::BuildTree(int row, int col)
 	valueMap[2][1] = 5;
 
 	int p = row * col;
-	moves = new Tree[p];
+	moves = new Node[p];
 	moveGen(row,col);
 }
 
