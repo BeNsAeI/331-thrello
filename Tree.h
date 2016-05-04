@@ -22,6 +22,7 @@ struct Tree{
 	int count;
 	int depth;
 	OthelloBoard* board;
+	char turn;
 };
 
 class BuildTree{

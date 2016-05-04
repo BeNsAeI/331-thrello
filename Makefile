@@ -6,7 +6,7 @@ OBJS = Board.o OthelloBoard.o Player.o HumanPlayer.o GameDriver.o MinimaxPlayer.
 
 all: ${SRCS} ${HEADERS}
 	${CXX} ${CXXFLAGS} ${SRCS} -o othello
-	./othello minimax minimax
+	./othello minimax human
 
 ${OBJS}: ${SRCS}
 	${CXX} -c $(@:.o=.cpp)
