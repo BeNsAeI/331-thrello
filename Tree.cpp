@@ -86,11 +86,11 @@ BuildTree::~BuildTree()
 }
 int  BuildTree::value(int row, int col)
 {
-	return 5;
+	return valueMap[row][col];
 }
 int  BuildTree::risk(int row, int col)
 {
-	return 0;
+	return riskMap[row][col];
 }
 bool BuildTree::isValid()
 {
