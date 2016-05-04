@@ -36,8 +36,10 @@ public:
 	 * @param row Holds the return value for the row of the move
 	 */
     void get_move(OthelloBoard* b, int& col, int& row);
-	void logic(OthelloBoard* b, struct Tree* current, int depth,int sym);
-	void nextMove(OthelloBoard* b);
+	int UtilityFunction(OthelloBoard* b, struct Tree* current, int depth, int sym, int outsym,int i); //Utility Function
+	void _minimax(struct Tree * current, int i);							//MINIMAX FUNCTION
+	void logic(OthelloBoard* b, struct Tree* current, int depth, int sym); //Successor function
+	void nextMove(OthelloBoard* b);											//Supplies the next move from Logic tree
     /**
      * @return A copy of the MinimaxPlayer object
      * This is a virtual copy constructor

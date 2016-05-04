@@ -36,6 +36,30 @@ MinimaxPlayer::~MinimaxPlayer() {
 	delete myTree;
 }
 
+//Utility Function
+int MinimaxPlayer::UtilityFunction(OthelloBoard* b, struct Tree* current, int depth, int sym, int outsym,int i)
+{
+	int out = 1;
+	out = out + myTree->moves[current->branch[i].move].value;
+	out = out - myTree->moves[current->branch[i].move].risk;
+	out = out + current->branch[i].board->count_score(sym) - current->branch[i].board->count_score(outsym);
+	for (int j = 0; j < current->branch[j].count; j++)
+		out = out - current->branch[i].board->count_score(outsym);
+	return out;
+}
+
+//MINIMAX FUNCTION
+void MinimaxPlayer::_minimax(struct Tree * current,int i)
+{
+	struct Tree * it = current;
+	while (it != &root)
+	{
+		it->value = it->value + current->branch[i].value;
+		it = it->parent;
+	}
+}
+
+//Successor function
 void MinimaxPlayer::logic(OthelloBoard* b, struct Tree* current, int depth,int sym)
 {
 	int pause;
@@ -70,22 +94,17 @@ void MinimaxPlayer::logic(OthelloBoard* b, struct Tree* current, int depth,int s
 			current->branch[i].parent = current;
 			current->branch[i].branch = NULL;
 			current->branch[i].turn = sym;
-			current->branch[i].value = 1 + myTree->moves[current->branch[i].move].value - myTree->moves[current->branch[i].move].risk + (current->branch[i].board->count_score(sym) - current->branch[i].board->count_score(outsym));
-			struct Tree * it = current;
-			while (it != &root)
-			{
-				it->value = it->value + current->branch[i].value;
-				it = it->parent;
-			}
-
-			current->branch[i].board->play_move(myTree->moves[current->branch[i].move].pos[x], myTree->moves[current->branch[i].move].pos[y], sym);
-//			current->branch[i].board->display();
-
 			if (current->branch[i].board->count_score(sym) > current->branch[i].board->count_score(outsym))
 				current->branch[i].value = current->branch[i].value + 2;
-//						std::cout << "Value: " << current->branch[i].value  << std::endl;
-//						std::cin >> pause;
+			else if (current->leaf)
+				current->branch[i].value = current->branch[i].value - 200;
+			else
+				current->branch[i].value = current->branch[i].value - 20;
+			current->branch[i].value = UtilityFunction(b, current, depth, sym, outsym, i);
+			_minimax(current,i);
 
+
+			current->branch[i].board->play_move(myTree->moves[current->branch[i].move].pos[x], myTree->moves[current->branch[i].move].pos[y], sym);
 			logic(current->branch[i].board, &current->branch[i], depth + 1, outsym);
 		}
 		

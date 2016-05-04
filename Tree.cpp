@@ -72,10 +72,10 @@ BuildTree::BuildTree(int row, int col)
 	valueMap[3][2] = 2;
 	valueMap[1][3] = 2;
 	valueMap[2][3] = 2;
-	valueMap[1][1] = 5;
-	valueMap[2][2] = 5;
-	valueMap[1][2] = 5;
-	valueMap[2][1] = 5;
+	valueMap[1][1] = 0;
+	valueMap[2][2] = 0;
+	valueMap[1][2] = 0;
+	valueMap[2][1] = 0;
 
 	int p = row * col;
 	moves = new Node[p];
