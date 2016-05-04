@@ -14,12 +14,14 @@ public:
 };
 
 struct Tree{
+	int move;
 	bool leaf;
 	int value;
 	struct Tree * branch;
 	struct Tree * parent;
 	int count;
 	int depth;
+	OthelloBoard* board;
 };
 
 class BuildTree{

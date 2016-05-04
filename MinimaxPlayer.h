@@ -36,7 +36,7 @@ public:
 	 * @param row Holds the return value for the row of the move
 	 */
     void get_move(OthelloBoard* b, int& col, int& row);
-	int logic(OthelloBoard* b,int pos, int depth);
+	void logic(OthelloBoard* b, struct Tree* current, int depth,int sym);
 
     /**
      * @return A copy of the MinimaxPlayer object
@@ -46,6 +46,7 @@ public:
 
 private:
 	char symbol;
+	char Osymbol;
 	BuildTree * myTree;
 	struct Tree root;
 	bool rootIsSet;

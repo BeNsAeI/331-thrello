@@ -17,57 +17,73 @@ MinimaxPlayer::MinimaxPlayer(char symb) :
 	myTree = new BuildTree();
 	symbol = symb;
 	rootIsSet = false;
+	root.leaf = true;
+	root.branch = NULL;
+	root.count = 0;
+	root.depth = 0;
+	root.value = 0;
+	root.move = 16;
+	root.parent = NULL;
+
+	if (symb == 'X')
+		Osymbol = 'O';
+	else
+		Osymbol = 'X';
 }
 
 MinimaxPlayer::~MinimaxPlayer() {
 	delete myTree;
 }
-int MinimaxPlayer::logic(OthelloBoard* b,int pos, int depth)
+
+void MinimaxPlayer::logic(OthelloBoard* b, struct Tree* current, int depth,int sym)
 {
-	int myMove[2];
-	if (!rootIsSet)
+	rootIsSet = true;
+	int validMoves[16];
+	int counter = 0;
+	for (int i = 0; i < 16; i++)
 	{
-		int validMoves[16];
-		int counter = 0;
-		for (int i = 0; i < 16; i++)
+		myTree->moves[i].valid = myTree->isValid(i, b, sym);
+		if (myTree->moves[i].valid)
 		{
-			myTree->moves[i].valid = myTree->isValid(i, b, symbol);
-			if (myTree->moves[i].valid)
-			{
-				validMoves[counter] = i;
-				counter++;
-			}
+			validMoves[counter] = i;
+			counter++;
 		}
-		if (counter != 0)
-		{
-			root.leaf = false;
-			root.branch = new struct Tree[counter];
-			root.parent = NULL;
-			root.count = counter;
-			root.depth = 0;
-			
-		}
-		else
-		{
-			root.leaf = true;
-			root.branch = NULL;
-			root.parent = NULL;
-			root.count = 0;
-			root.depth = 0;
-		}
-		std::cout << counter << " Valid moves found" << std::endl;
-		rootIsSet = true;
 	}
+	std::cout << "** " << counter << " Valid moves found at depth " << depth << " with symbol: " << (char)sym << std::endl;
+	if (counter != 0)
+	{
+		current->leaf = false;
+		current->branch = new struct Tree[counter];
+		current->count = counter;
+		current->depth = 0;
+		for (int i = 0; i < counter; i++)
+		{
+			current->branch[i].move = validMoves[i];
+			current->branch[i].depth = depth;
+			current->branch[i].leaf = true;
+			current->branch[i].parent = current;
+			current->branch[i].branch = NULL;
+			current->branch[i].value = myTree->moves[current->branch[i].move].value;
+			current->branch[i].board = new OthelloBoard(*b);
+			current->branch[i].board->play_move(myTree->moves[current->branch[i].move].pos[x], myTree->moves[current->branch[i].move].pos[y], sym);
+			int outsym;
+			if (sym == 'X')
+				outsym = 'O';
+			else
+				outsym = 'X';
+			std::cout << "Passing i: " << i << std::endl;
+			logic(b, &current->branch[i], depth + 1, outsym);
+		}
+		
+	}
+	else
+	{
+		current->leaf = true;
+		current->branch = NULL;
+		current->count = 0;
+	}
+	
 
-
-
-	//myMove[x] = myTree->moves[index].pos[x];
-	//myMove[y] = myTree->moves[index].pos[y];
-
-
-	if (pos == x)
-		return myMove[x];
-	return myMove[y];
 }
 void MinimaxPlayer::get_move(OthelloBoard* b, int& col, int& row) {
 	int index;
@@ -80,15 +96,17 @@ void MinimaxPlayer::get_move(OthelloBoard* b, int& col, int& row) {
 			index++;
 			myTree->moves[index].valid = myTree->isValid(index, b, symbol);
 		}
-		col = myTree->moves[index].pos[x];
-		row = myTree->moves[index].pos[y];
 	}
 	if (AI)
 	{
-		col = logic(b,x, 0);
-		row = logic(b,y, 0);
+		if (!rootIsSet)
+		{
+			OthelloBoard * myboard = new OthelloBoard(*b);
+			logic(myboard, &root, 0,symbol);
+		}
 	}
-
+	col = myTree->moves[index].pos[x];
+	row = myTree->moves[index].pos[y];
 	std::cout << "MiniMaxBot selected " << col << " as colomn and " << row << " as row." << std::endl;
 
 }
